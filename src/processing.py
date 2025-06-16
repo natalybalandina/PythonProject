@@ -1,9 +1,8 @@
-from typing import List, Dict
 from datetime import datetime
+from typing import Any, Dict, List
 
 
-def filter_by_state(id_numbers: str, state='EXECUTED') -> List[Dict]:
-
+def filter_by_state(id_numbers: Any, state: Any = "EXECUTED") -> tuple[list, list]:
     """
  Принимает список словарей filter_by_state и значение для ключа state по умолчанию'EXECUTED'.
   Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state соответствует
@@ -23,25 +22,27 @@ def filter_by_state(id_numbers: str, state='EXECUTED') -> List[Dict]:
   {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]
     """
 
-    filter_default_key = [item for item in id_numbers if item.get('state') == state]
-    filter_specified_state = [item for item in id_numbers if item.get('state') != state]
+    filter_default_key: List = [item for item in id_numbers if item.get("state") == state]
+    filter_specified_state: List = [item for item in id_numbers if item.get("state") != state]
 
     return (filter_default_key, filter_specified_state)
 
 
-def sort_by_date(data: List[Dict], reverse: bool = True) -> List[Dict]:
+def sort_by_date(data: List[Dict], reverse: bool = True) -> List[Dict[Any, Any]]:
     """
-Сортирует список операций по ключу 'date' (по убыванию) и возвращает новый список, отсортированный
-по дате.
+    Сортирует список операций по ключу 'date' (по убыванию) и возвращает новый список, отсортированный
+    по дате.
     """
-    return sorted(data, key=lambda x: datetime.fromisoformat(x['date']), reverse=reverse)
+    return sorted(data, key=lambda x: datetime.fromisoformat(x["date"]), reverse=reverse)
 
 
 # Ожидаемый результат (сортировка по ключу 'state'):
-list_of_test = [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-                {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-                {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-                {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]
+list_of_test = [
+    {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+    {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+    {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+    {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+]
 
 
 EXECUTED, CANCELED = filter_by_state(list_of_test)
