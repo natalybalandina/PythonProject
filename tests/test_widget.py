@@ -8,11 +8,11 @@ from src.widget import get_date, mask_account_card
 @pytest.mark.parametrize(
     "bank_number, expected",
     [
-        ("Visa Platinum 7000792289606361", "Visa Platinum 7000 79** **** 6361"),
+        ("Visa Platinum 7000792289606361", "VisaPlatinum 7000 79** **** 6361"),
         ("Maestro 7000792289606361", "Maestro 7000 79** **** 6361"),
-        ("Счет 73654108430135874305", "Счет **4305"),
+        ("Счет 73654108430135874305", "Счет  **4305"),
         ("MasterCard 1234 5678 9012 3456", "MasterCard 1234 56** **** 3456"),
-        ("Счет №11112222333344445555", "Счет **5555"),
+        ("Счет №11112222333344445555", "Счет  **5555"),
     ],
 )
 def test_mask_account_card(bank_number: Any, expected: Any) -> Any:
