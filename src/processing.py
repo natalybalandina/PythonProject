@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 
 def filter_by_state(id_numbers: Any, state: Any = "EXECUTED") -> tuple[list, list]:
     """
- Принимает список словарей filter_by_state и значение для ключа state по умолчанию'EXECUTED'.
+  Принимает список словарей filter_by_state и значение для ключа state по умолчанию 'EXECUTED'.
   Функция возвращает новый список словарей, содержащий только те словари, у которых ключ state соответствует
   указанному значению.
    Функция принимает:  Список словарей для фильтрации\

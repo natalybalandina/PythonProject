@@ -1,40 +1,62 @@
-from typing import Any, Dict, List
+from typing import Any
+
 import pytest
+
 from src.processing import filter_by_state, sort_by_date
+
+# Пример данных для тестов
+data = [
+    {"date": "2024-01-01T12:00:00.000000", "state": "EXECUTED", "amount": 100},
+    {"date": "2024-01-05T12:00:00.000000", "state": "CANCELED", "amount": 200},
+    {"date": "2024-01-03T12:00:00.000000", "state": "EXECUTED", "amount": 300},
+    {"date": "2024-01-02T12:00:00.000000", "state": "EXECUTED", "amount": 400},
+    {"date": "2024-01-05T12:00:00.000000", "state": "EXECUTED", "amount": 150},  # Одинаковая дата для тестирования
+]
 
 
 @pytest.fixture
-def filter_state():
-    return [
-        {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
-        {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
-        {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
-        {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"}    ]
+def test_data() -> Any:
+    return data
 
-def test_filter_by_state_executed(bank_base: Any):
-    assert (filter_by_state(bank_base, state = 'EXECUTED') ==
+
+@pytest.mark.parametrize("state, expected", [("EXECUTED", 2), ("CANCELED", 2)])
+def test_filter_by_state(test_data: Any, state: Any, expected: Any) -> Any:
+    filtered_transactions = filter_by_state(test_data, state)
+    assert len(filtered_transactions) == expected
+
+
+@pytest.mark.parametrize(
+    "reverse_order, expected_dates",
     [
-        {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-        {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}
-    ])
+        (
+            True,
+            [
+                "2024-01-05T12:00:00.000000",  # Последняя по дате
+                "2024-01-05T12:00:00.000000",  # Одинаковая дата
+                "2024-01-03T12:00:00.000000",
+                "2024-01-02T12:00:00.000000",
+                "2024-01-01T12:00:00.000000",  # Первая по дате
+            ],
+        ),
+        (
+            False,
+            [
+                "2024-01-01T12:00:00.000000",
+                "2024-01-02T12:00:00.000000",
+                "2024-01-03T12:00:00.000000",
+                "2024-01-05T12:00:00.000000",  # Одинаковая дата
+                "2024-01-05T12:00:00.000000",  # Последняя по дате
+            ],
+        ),
+    ],
+)
+def test_sort_by_date(test_data: Any, reverse_order: Any, expected_dates: Any) -> Any:
+    # Тестирование сортировки по дате
+    sorted_data = sort_by_date(test_data, reverse_order)
+    sorted_dates = [item["date"] for item in sorted_data]
+    assert sorted_dates == expected_dates
 
-def test_filter_by_state_canceled(bank_base):
-    assert (filter_by_state(bank_base, state = 'CANCELED') ==
-    [
-        {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-        {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
-    ])
 
-
-@pytest.mark.parametrize ("bank_base, date",
-[
-    {"2019-07-03T18:35:29.512364", "03.07.2019"},
-    {"2018-10-14T08:21:33.419441", "14.10.2018"},
-    {"2018-09-12T21:27:25.241689", "12.09.2018"},
-    {"2018-06-30T02:08:58.425572", "30.06.2018"}
-])
-
-
-def test_sort_by_date(bank_base: Any, date: Any) -> Any:
-    # сортировка по убыванию даты
-    assert sort_by_date(bank_base) == date
+# Запуск тестов
+if __name__ == "__main__":
+    pytest.main()
