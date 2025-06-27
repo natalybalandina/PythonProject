@@ -231,7 +231,7 @@ for card_number in card_number_generator(1, 5):
 **Входные данные к проекту**
 
 Для проверки функций 'filter_by_currency' и 'transaction_descriptions':
-
+```
 transactions = (
     [
         {
@@ -311,6 +311,7 @@ transactions = (
         }
     ]
 )
+```
 
 **Выполнение заданий**
 
