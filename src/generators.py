@@ -68,3 +68,4 @@ def card_number_generator(start: int, stop: int) -> Generator[str, None, None]:
     for number in range(start, stop + 1):
         yield (f"{number:016d}"[:4] + " " + f"{number:016d}"[4:8] + " " + f"{number:016d}"[8:12]
                + " " + f"{number:016d}"[12:])
+
