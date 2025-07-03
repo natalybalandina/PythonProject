@@ -31,6 +31,7 @@ def norm_func(x, y):
 def error_func(x, y):
     return x / y
 
+
 def test_norm_func(capsys):
     result = norm_func(10, 2)
     assert result == 12
@@ -50,4 +51,3 @@ def test_error_func(capsys):
     with open("logs/test_log.txt", "r") as log_file:
         log_content = log_file.readlines()
         assert any("error_func error: ZeroDivisionError" in line for line in log_content)
-
