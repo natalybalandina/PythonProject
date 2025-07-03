@@ -33,14 +33,14 @@ def error_func(x, y):
 
 
 def test_norm_func(capsys):
-    result = norm_func(3, 2)
-    assert result == 5
+    result = norm_func(1, 2)
+    assert result == 3
 
     # Проверка вывода в файл
     with open("logs/mylog.txt", "r") as log_file:
         log_content = log_file.readlines()
         assert any("norm_func called at" in line for line in log_content)
-        assert "norm_func result: 5" in log_content[-1]
+        assert "norm_func result: 3" in log_content[-1]
 
 
 def test_error_func(capsys):
