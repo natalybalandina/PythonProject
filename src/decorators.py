@@ -1,25 +1,51 @@
-import functools
+import logging
+import os
+from datetime import datetime
 
 
-def log(filename):
+# Настройка логирования
+def setting_logger(filename=None):
+    logger = logging.getLogger("my_logger")
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(asctime)s - %(message)s")
+
+    if filename is not None:
+        log_file = os.path.join("logs", filename)
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)  # Создание папки, если не существует
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    else:
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
+
+    return logger
+
+
+def log(filename=None):
     """
-    Декоратор для автоматической регистрации деталей выполнения функций (время вызова, имя функции, передаваемые
-    аргументы, результат выполнения и информация об ошибках.
+        Декоратор для логирования вызовов функции, который записывает информацию о вызове обернутой
+        функции, включая переданные аргументы и возвращаемое значение, в указанный файл или выводит
+        в консоль.
+        В случае возникновения исключения декоратор также записывает информацию об ошибке.
     """
+    logger = setting_logger(filename)
 
     def decorator(func):
-        @functools.wraps(func)
         def wrapper(*args, **kwargs):
+            function_name = func.__name__
+            start_time = datetime.now()
+            logger.info(f"{function_name} called at {start_time.isoformat()} with args: {args} and kwargs: {kwargs}")
+
             try:
                 result = func(*args, **kwargs)
-                with open(filename, "a") as file:
-                    file.write(f"Запуск функции: {func.__name__} с аргументами: {args}, {kwargs}\n")
-                    file.write(f"Функция: {func.__name__} вернула: {result}\n")
+                logger.info(f"{function_name} result: {result}")
                 return result
             except Exception as e:
-                with open(filename, "a") as file:
-                    file.write(f"Ошибка в функции: {func.__name__} с аргументами: {args}, {kwargs}\n")
-                raise e
+                error_message = f"{function_name} error: {type(e).__name__}. Inputs: {args}, {kwargs}"
+                logger.error(error_message)
+                raise
 
         return wrapper
 

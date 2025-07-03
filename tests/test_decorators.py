@@ -17,41 +17,38 @@ def clean_up():
         os.remove("test_log.txt")
 
 
-@log("test_log.txt")
-def divide(x, y):
-    """Выполняет деление двух чисел X и Y -> (float).
+# Успешная функция
+@log(filename="test_log.txt")
+def norm_func(x, y):
+    """Выполняет деление двух чисел x и y -> (float).
     Возвращает: float: Результат деления.
-    Исключения:  ZeroDivisionError: Если y равно нулю.
     """
+    return x + y
+
+
+# Пример функции с ошибкой
+@log(filename="test_log.txt")
+def error_func(x, y):
     return x / y
 
 
-def test_log_written_to_file(clean_up):
-    """
-    Тестирует сохранение логов после успешного выполнения функции, т.е. что лог-файл создается,
-    и корректно записываются при успешном вызове функции divide.
-    """
-    divide(10, 2)
+def test_norm_func(capsys):
+    result = norm_func(10, 2)
+    assert result == 12
 
-    assert os.path.exists("test_log.txt"), "Файл журнала не создан."
-
-    with open("test_log.txt", "r") as file:
-        logs = file.readlines()
-
-    assert any(
-        "Запуск функции: divide с аргументами: (10, 2), {}" in log for log in logs
-    ), "Логи выполнения не найдены."
-    assert any("Функция: divide вернула: 5.0" in log for log in logs), "Логи результата не найдены."
+    # Проверка вывода в файл
+    with open("logs/mylog.txt", "r") as log_file:
+        log_content = log_file.readlines()
+        assert any("norm_func called at" in line for line in log_content)
+        assert "norm_func result: 3" in log_content[-1]
 
 
-def test_log_error(clean_up):
-    """Тестирует логирование ошибок при возникновении исключения. Проверяет, что функция divide
-    выбрасывает исключение ZeroDivisionError и что соответствующая запись логируется в файл.
-    """
+def test_error_func(capsys):
     with pytest.raises(ZeroDivisionError):
-        divide(10, 0)
+        error_func(1, 0)
 
-    with open("test_log.txt", "r") as file:
-        logs = file.readlines()
+    # Проверка вывода в файл
+    with open("logs/mylog.txt", "r") as log_file:
+        log_content = log_file.readlines()
+        assert any("error_func error: ZeroDivisionError" in line for line in log_content)
 
-    assert any("Ошибка в функции: divide с аргументами: (10, 0), {}" in log for log in logs)
