@@ -38,7 +38,7 @@ class TestUtils(unittest.TestCase):
         mock_get.return_value.status_code = 200
 
         # Предположим, курс 78.021461 RUB за USD, тогда 100 USD будут стоить 7802
-        mock_get.return_value.json.return_value = {"rates": {"RUB": 7802}}
+        mock_get.return_value.json.return_value = {"rates": {"RUB": 78.02}}
 
         transaction = {"amount": 100, "currency": "USD"}
         result = convert_to_rub(transaction)
