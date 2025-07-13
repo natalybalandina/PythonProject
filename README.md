@@ -474,28 +474,28 @@ def convert_to_rub(currencys: str) -> float:
 
 # Тестирование
 ```
-======================= tests coverage ======================== 
-_______ coverage: platform win32, python 3.13.3-final-0 _______ 
+=========================== tests coverage ===========================
+__________ coverage: platform win32, python 3.13.3-final-0 ___________ 
 
 Name                         Stmts   Miss  Cover
 ------------------------------------------------
 src\__init__.py                  0      0   100%
-src\external_api.py             24      1    96%
+src\external_api.py             27      5    81%
 src\generators.py               22      3    86%
 src\masks.py                     8      0   100%
 src\processing.py               14      0   100%
 src\utils.py                    13      0   100%
 src\widget.py                   27      0   100%
 tests\__init__.py                0      0   100%
-tests\test_external_api.py       5      0   100%
+tests\test_external_api.py      27      1    96%
 tests\test_generators.py        33      0   100%
 tests\test_masks.py              9      0   100%
 tests\test_processing.py        18      1    94%
 tests\test_utils.py             36      1    97%
 tests\test_widget.py             9      0   100%
 ------------------------------------------------
-TOTAL                          218      6    97%
-===================== 35 passed in 3.32s ====================== 
+TOTAL                          243     11    95%
+========================= 36 passed in 0.51s =========================
 ```
 Функциональный код покрыт тестами больше 80%.
 
