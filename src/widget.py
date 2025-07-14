@@ -1,40 +1,71 @@
-import datetime
+from datetime import datetime
 
-from src.masks import get_mask_account, get_mask_card_number
-
-
-def mask_account_card(bank_card_details: str) -> str:
-    """Функция, которая маскирует номер карты либо счета"""
-    bank_card_details_name = ""
-    bank_card_details_num = ""
-    new_bank_card_details = 0
-    for el in bank_card_details:
-        if el.isalpha():
-            bank_card_details_name += el
-        elif el.isdigit():
-            bank_card_details_num += el
-            new_bank_card_details += 1
-    if new_bank_card_details > 16:
-        return f"{bank_card_details_name} {get_mask_account(bank_card_details_num)}"
-    else:
-        return f"{bank_card_details_name} {get_mask_card_number(bank_card_details_num)}"
+import src.masks  # type: ignore
 
 
-def get_date(date: str) -> str:
+def mask_account_card(input_string: str) -> str:
     """
-    Функция, которая возвращает дату в формате ДД.ММ.ГГГГ
+    Маскирует номер карты или счета в зависимости от типа.
     """
-    new_date = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
-    date_conversion = new_date.strftime("%d.%m.%Y")
+    parts = input_string.split()
+    card_type = " ".join(parts[:-1])  # Слова через пробел, указывающие тип карты или счета (кроме последнего)
+    card_number_str = parts[-1]  # Последнее - номер карты или счета
 
-    return date_conversion
+    try:
+        card_number = int(card_number_str)
+        if "счет" in card_type.lower():  # Проверка на слово "Счет"
+            masked_number = src.masks.get_mask_account(card_number)
+        elif len(card_number_str) == 16:  # Проверка длины номера карты
+            masked_number = src.masks.get_mask_card_number(card_number)
+        else:
+            raise ValueError("Неверный формат номера счета или карты")
+        return f"{card_type} {masked_number}"
+    except ValueError as e:
+        return f"Ошибка: {e}"
 
 
-print(mask_account_card("Счет 32145698741236985421"))
-print(mask_account_card("Maestro 1596837868705199"))
-print(mask_account_card("Счет 64686473678894779589"))
-print(mask_account_card("Master Card 7158300734726758"))
-print(mask_account_card("Visa Classic 6831982476737658"))
-print(mask_account_card("Visa Gold 5999414228426353"))
-print(get_date("2024-03-11T02:26:18.671407"))
-print(get_date("2025-06-08T02:26:18.671407"))
+def get_date(input_string: str) -> str:
+    """
+    Преобразует строку с датой в формате 'YYYY-MM-DDTHH:MM:SS.ssssss' в формат 'DD.MM.YYYY'.
+    Возвращает пустую строку при неверном формате или невалидной дате.
+    """
+    input_string = input_string.strip()
+
+    if not input_string:
+        return ""
+
+    try:
+        # Парсим дату из строки
+        date_object = datetime.fromisoformat(input_string[:-7])  # Убираем последние 7 символов
+        return date_object.strftime("%d.%m.%Y")
+    except ValueError:
+        # Если произошла ошибка при парсинге, возвращаем пустую строку
+        return ""
+
+
+# Примеры использования
+if __name__ == "__main__":
+    card_examples = [
+        "Visa Platinum 7000792289606361",
+        "Счет 73654108430135874305",
+        "Maestro 1596837868705199",
+        "Счет 64686473678894779589",
+        "MasterCard 7158300734726758",
+        "Счет 35383033474447895560",
+        "Visa Classic 6831982476737658",
+        "Visa Platinum 8990922113665229",
+        "Visa Gold 5999414228426353",
+        "Счет 73654108430135874305",
+    ]
+
+    for card_data in card_examples:
+        print(f"Входной аргумент: {card_data}")
+        print(f"Выход функции: {mask_account_card(card_data)}")
+        print("---")
+
+    date_examples = ["2024-03-11T02:26:18.671407", "2023-12-25T15:45:30.123456", "invalid date"]
+
+    for date_data in date_examples:
+        print(f"Входной аргумент: {date_data}")
+        print(f"Выход функции: {get_date(date_data)}")
+        print("---")
