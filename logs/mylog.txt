@@ -214,3 +214,19 @@
 2025-07-14 22:54:55,083 - error_func called at 2025-07-14T22:54:55.083557 with args: (1, 0) and kwargs: {}
 2025-07-14 22:54:55,083 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
 2025-07-14 22:54:55,083 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
+2025-07-17 22:02:56,202 - norm_func called at 2025-07-17T22:02:56.202730 with args: (1, 2) and kwargs: {}
+2025-07-17 22:02:56,202 - norm_func called at 2025-07-17T22:02:56.202730 with args: (1, 2) and kwargs: {}
+2025-07-17 22:02:56,204 - norm_func result: 3
+2025-07-17 22:02:56,204 - norm_func result: 3
+2025-07-17 22:02:56,208 - error_func called at 2025-07-17T22:02:56.208835 with args: (1, 0) and kwargs: {}
+2025-07-17 22:02:56,208 - error_func called at 2025-07-17T22:02:56.208835 with args: (1, 0) and kwargs: {}
+2025-07-17 22:02:56,209 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
+2025-07-17 22:02:56,209 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
+2025-07-17 22:16:26,163 - norm_func called at 2025-07-17T22:16:26.163848 with args: (1, 2) and kwargs: {}
+2025-07-17 22:16:26,163 - norm_func called at 2025-07-17T22:16:26.163848 with args: (1, 2) and kwargs: {}
+2025-07-17 22:16:26,164 - norm_func result: 3
+2025-07-17 22:16:26,164 - norm_func result: 3
+2025-07-17 22:16:26,168 - error_func called at 2025-07-17T22:16:26.168623 with args: (1, 0) and kwargs: {}
+2025-07-17 22:16:26,168 - error_func called at 2025-07-17T22:16:26.168623 with args: (1, 0) and kwargs: {}
+2025-07-17 22:16:26,168 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
+2025-07-17 22:16:26,168 - error_func error: ZeroDivisionError. Inputs: (1, 0), {}
