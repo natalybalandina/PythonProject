@@ -476,7 +476,6 @@ def convert_to_rub(currencys: str) -> float:
 
 ```
 ======================= tests coverage ======================== 
-_______ coverage: platform win32, python 3.13.3-final-0 _______ 
 
 Name                         Stmts   Miss  Cover
 ------------------------------------------------
@@ -503,22 +502,20 @@ TOTAL                          218      6    97%
 
 Вводим команду 'pytest --cov=src --cov-report=html' чтобы сгенерировать отчет о покрытии в HTML-формате, где src — пакет c модулями, которые тестируем. Отчет сгенерирован в папке htmlcov и храниться в файле с названием index.html.
 
-# Библиотеки csv и pandas
-** Задача
+# Библиотеки csv и pandas #
+
+**Задача**
+
 1. Реализовать считывание финансовых операций из CSV- и XLSX-файлов.
 
-# Выполнение #
+# Выполнение 
 1. Скачаны файлы 'transactions.csv' и 'transactions_excel.xlsx' для работы над задачами.
 2. Создан отдельный модуль для новых функций.
 3. Реализованы функции, которые считывают финансовые операции
 - из CSV файла:
-```
-def read_transactions_from_csv(file_path):
-```
+```def read_transactions_from_csv(file_path):```
 - из Excel файла:
-```
-read_transactions_from_excel(file_path:
-```
+```read_transactions_from_excel(file_path:```
 
 4. Все необходимые для работы библиотеки добавлены в зависимости проекта.
 
@@ -530,10 +527,9 @@ read_transactions_from_excel(file_path:
 4. При запуске тестов командой 'pytest' все тесты завершаются успешно.
 
 *Результаты тестирования*
-
 ```
 =================== tests coverage ==================== 
-___ coverage: platform win32, python 3.13.3-final-0 ___ 
+
 
 Name                               Stmts   Miss  Cover  
 ------------------------------------------------------  
