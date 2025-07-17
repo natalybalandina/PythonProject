@@ -473,6 +473,7 @@ def convert_to_rub(currencys: str) -> float:
  При вызове isort форматируется не более 1 импорта.
 
 *Результаты тестирования*
+
 ```
 ======================= tests coverage ======================== 
 _______ coverage: platform win32, python 3.13.3-final-0 _______ 
@@ -529,6 +530,7 @@ read_transactions_from_excel(file_path:
 4. При запуске тестов командой 'pytest' все тесты завершаются успешно.
 
 *Результаты тестирования*
+
 ```
 =================== tests coverage ==================== 
 ___ coverage: platform win32, python 3.13.3-final-0 ___ 
