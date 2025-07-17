@@ -500,3 +500,57 @@ TOTAL                          218      6    97%
 Функциональный код покрыт тестами больше 80%.
 
 Вводим команду 'pytest --cov=src --cov-report=html' чтобы сгенерировать отчет о покрытии в HTML-формате, где src — пакет c модулями, которые тестируем. Отчет сгенерирован в папке htmlcov и храниться в файле с названием index.html.
+
+№ Библиотеки csv и pandas
+** Задача
+1. Реализовать считывание финансовых операций из CSV- и XLSX-файлов.
+
+** Выполнение **
+1. Скачаны файлы 'transactions.csv' и 'transactions_excel.xlsx' для работы над задачами.
+2. Создан отдельный модуль для новых функций.
+3. Реализованы функции, которые считывают финансовые операции
+- из CSV файла:
+```
+def read_transactions_from_csv(file_path):
+```
+- из Excel файла:
+```
+read_transactions_from_excel(file_path:
+```
+
+4. Все необходимые для работы библиотеки добавлены в зависимости проекта.
+
+*Тестирование*
+1. Написаны тесты к новым функциональностям проекта.
+2. Тесты для функции считывания финансовых операций из CSV используют Mock и patch.
+3. Тесты для функции считывания финансовых операций из Excel используют Mock и patch.
+4. При запуске тестов командой 'pytest' все тесты завершаются успешно.
+```
+=================== tests coverage ==================== 
+___ coverage: platform win32, python 3.13.3-final-0 ___ 
+
+Name                               Stmts   Miss  Cover  
+------------------------------------------------------  
+src\__init__.py                        0      0   100%  
+src\decorators.py                     34      3    91%  
+src\external_api.py                   27      5    81%  
+src\generators.py                     22      3    86%  
+src\masks.py                          29      1    97%  
+src\processing.py                     14      0   100%  
+src\transaction_reader.py             35      7    80%  
+src\utils.py                          27      1    96%  
+src\widget.py                         36     10    72%  
+tests\__init__.py                      0      0   100%  
+tests\test_decorators.py              27      3    89%  
+tests\test_external_api.py            27      1    96%  
+tests\test_generators.py              33      0   100%  
+tests\test_masks.py                   16      0   100%  
+tests\test_processing.py              18      1    94%  
+tests\test_transaction_reader.py      39      1    97%  
+tests\test_utils.py                   36      1    97%  
+tests\test_widget.py                  15      1    93%  
+------------------------------------------------------  
+TOTAL                                435     38    91%  
+================= 41 passed in 0.96s ==================
+```
+Функциональный код покрыт тестами больше 80%.
