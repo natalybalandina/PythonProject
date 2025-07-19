@@ -56,3 +56,8 @@ exclude = '''
 [tool.isort]
 # максимальная длина строки
 line_length = 119
+
+[tool.pytest.ini_options]
+markers = [
+    "timeout: mark test with timeout"
+]
